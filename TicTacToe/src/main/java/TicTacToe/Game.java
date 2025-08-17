@@ -132,7 +132,21 @@ public class Game {
         game.lastRow = playingRow;
         game.lastCol = playingCol;
 
+        printBoard(game.gameBoard);
+
         return game;
+    }
+
+    public void printBoard(Board board)
+    {
+        for(int i=0;i<board.numRows;i++)
+        {
+            for(int j=0;j< board.numCols;j++)
+            {
+                System.out.print(" | " + board.cells[i][j].symbol + " | ");
+            }
+            System.out.println();
+        }
     }
     public  Game checkGameStatus(Game game)
     {
@@ -153,15 +167,6 @@ public class Game {
         System.out.println("leftDiag "+leftDiag);
         System.out.println("rightDiag "+rightDiag);
 
-
-        for(int i=0;i<game.gameBoard.numRows;i++)
-        {
-            for(int j=0;j<game.gameBoard.numCols;j++)
-            {
-                System.out.print(game.gameBoard.cells[i][j].symbol + " ");
-            }
-            System.out.println();
-        }
 
         if(vert || horiz || leftDiag || rightDiag)
         {
@@ -186,6 +191,7 @@ public class Game {
 
             System.out.println(" should we continuePlay "+continuePlay);
 
+
             // if continuePlay == false till now -> means all cells are filled . so match draw
             if(!continuePlay)
             {
@@ -193,13 +199,23 @@ public class Game {
             }
             else // if not draw and still cell is empty then switch player and continue playing
             {
-                game.currentPlayer = (game.currentPlayer == game.gamePlayers.get(0)) ? game.gamePlayers.get(1) : game.gamePlayers.get(0);
+                System.out.println("Continue game..!! ");
+                System.out.println("Switching players...");
+                game.currentPlayer = switchPlayers(currentPlayer,gamePlayers);
             }
 
         }
         return game;
 
     }
+
+    public Player switchPlayers(Player currentPlayer,  List<Player> gamePlayers)
+    {
+        currentPlayer = (currentPlayer == gamePlayers.get(0)) ? gamePlayers.get(1) : gamePlayers.get(0);
+        return currentPlayer;
+    }
+
+
 
     public  boolean checkVertical(Board gameBoard, int playingCol, Symbol playerSymbol)
     {
